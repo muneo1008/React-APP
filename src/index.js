@@ -1,6 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-const myFirstElement = <h1>Hello React!</h1>
+function Football(){
+    const shoot = (a) =>{
+        alert(a);
+    }
+    return(<button onClick={()=>shoot("aaa")}>Take the shot!</button>);
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(myFirstElement);
+root.render(<Football/>);
