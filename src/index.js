@@ -1,12 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-
-function Football(){
-    const shoot = (a) =>{
-        alert(a);
-    }
-    return(<button onClick={()=>shoot("aaa")}>Take the shot!</button>);
-}
+import {BrowserRouter} from 'react-router-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<Football/>);
+root.render(
+    <React.StrictMode>
+        <BrowserRouter>
+            <App/>
+        </BrowserRouter>
+       
+    </React.StrictMode>
+);
+
+reportWebVitals();
