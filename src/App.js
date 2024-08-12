@@ -6,13 +6,14 @@ import About from './pages/about';
 import Counter from './pages/Counter';
 import Input from './pages/input';
 import Input2 from './pages/input2';
-import List from './pages/List'
+import List from './pages/List';
+
 
 function App() {
   return (
     <div className="App">
       <nav>
-        <Link to="/">Home</Link> | 
+        <Link to="/">Home</Link> |
         <Link to="/about">About</Link> | 
         <Link to="/Counter">Counter</Link> | 
         <Link to="/Input">Input</Link> | 
