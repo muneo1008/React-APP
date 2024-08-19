@@ -1,108 +1,113 @@
 import React from 'react';
-// import {Routes, Route,Link} from 'react-router-dom';
-// import { Button, Alert, Container, NavDropdown,Card,Accordion,Badge,Tab,ButtonGroup } from 'react-bootstrap';
+import { Routes, Route, Link } from 'react-router-dom';
+import { Button, InputGroup, Form, ButtonGroup, Tab, Table } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
+import './App.css'
 
-// import Home from './pages/Home';
-// import About from './pages/about';
-// import Counter from './pages/Counter';
-// import Input from './pages/input';
-// import Input2 from './pages/input2';
-// import List from './pages/List';
-
-
-function Nav(props){
-  const lis = []
-  for (let i = 0; i < props.topics.length; i++) {
-    const element = props.topics[i];
-    lis.push(<li key={element.id}>
-      <a id={element.id} href={'/read/'+element.id} onClick={(event)=>{
-        event.preventDefault();
-        props.onChangeMode(event.target.id);
-      }}>{element.title}</a>
-      </li>)
-    
-  }
-  return(
-    <ol>{lis}</ol>
-  )
-}
-
-function Article(props){
-  return(
-    <article>
-        <h2>{props.title}</h2>
-        {props.body}
-      </article>
-  )
-}
-function Header(props){
-
-  return(
-    <header>
-      <h1><a href='/' onClick={(event)=>{
-        event.preventDefault();
-        props.onChangeMode();
-      }}>{props.title}</a></h1>
-      </header>
-  )
-}
 function App() {
-  const [mode, setMode] = useState('WELCOME');
-  const [id, setId] = useState(null);
-  const topics = [
-    {id:1,title:'html',body:'html is ...'},
-    {id:2,title:'css',body:'css is ...'},
-    {id:3,title:'js',body:'js is ...'}
-  ]
-  let content =null;
-  if(mode ==='WELCOME'){
-    content = <Article title='Welcome' body='Hello, WEB'/>
-  }else if(mode === 'READ'){
-    let title,body = null;
-    for (let i = 0; i < topics.length; i++) {
-      if(topics[i].id === id){
-        title = topics[i].title;
-        body = topics[i].body;
-      }
-    }
-    content = <Article title={title} body={body}/>
+  const [todoList, setTodoList] = useState([
+    { no: 1, title: '공부하기', done: false },
+    { no: 2, title: '밥먹기', done: false },
+    { no: 3, title: '크로스핏가기', done: true },
+    { no: 4, title: '꿀잠자기', done: false }]
+  );
+  const [noCnt, setNoCnt] = useState(5);
+  const [inputTitle, setInputTitle] = useState("");
+  const [outputTitle, setOutputTitle] = useState("");
+  const onSaveTitle = (e) => {
+    setTodoList([...todoList, { no: noCnt, title: inputTitle, done: false }]);
+    setNoCnt(noCnt + 1);
+    setInputTitle("");
+
   }
+  const onChangeTitle = (e) => {
+    setInputTitle(e.target.value);
+  }
+  const onEdit = ({ no, title, done }) => {
+    const newEditList = [...todoList];
+    todoList.forEach((item, idx)=>{
+      if(item.no === no){
+        newEditList[idx].title = outputTitle;
+      }
+    });
+    setOutputTitle("");
+    console.log(newEditList);
+    setTodoList(newEditList);
+  }
+  const onDelete = ({ no, title, done }) => {
+    const newList = todoList.filter((todo) => {
+      return todo.no !== no;
+    });
+    setTodoList(newList);
+  }
+  const onDoneFlag = ({ no, title, done }) => {
+    const newTodoList = [...todoList];
+    todoList.forEach((item, idx)=>{
+      if(item.no === no){
+        newTodoList[idx].done = !done;
+      }
+    });
+    setTodoList(newTodoList);
+  }
+  const line = { textDecoration: "line-through" };
+
 
   return (
+
     <div className="App">
+      <div className='App-header'>
+        <h1>TodoList App</h1>
+      </div>
+      <div className='input-title'>
+        <InputGroup>
+          <Form.Control type="text" placeholder="Input Todo" onChange={onChangeTitle} />
+          <Button variant="primary" onClick={onSaveTitle}>
+            Save
+          </Button>
+        </InputGroup>
+      </div>
+      <div className='list-body'>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First Name</th>
+              <th>Username</th>
+            </tr>
+          </thead>
+          <tbody>
+            {todoList.map((item) => {
+              return (
+                <tr key={item.no}>
+                  <td colSpan={3}>
+                    <InputGroup>
+                      <InputGroup.Checkbox defaultChecked={item.done} onChange={() => {
+                        onDoneFlag(item);
+                      }} />
 
-      <Header title='REACT' onChangeMode={()=>{
-        setMode('WELCOME');
-      }}/>
+                      <Form.Control style={item.done ? line : {}} type="text" 
+                      defaultValue={item.title} 
+                      onChange={(e)=>{
+                        setOutputTitle(e.target.value);
+                      }}
+                      />
 
-      <Nav topics={topics} onChangeMode={(_id)=>{
-        setMode('READ');
-        setId(_id);
-      }}/>
-      {content}
+                      <Button variant="primary" onClick={() => {
+                        onEdit(item);}}>Edit</Button>
+                      <Button variant="danger" onClick={() => {
+                        onDelete(item);
+                      }}>Delete</Button>
+                    </InputGroup>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </Table>
+
+      </div>
     </div>
-      
-      /* <nav>
-        <Link to="/">Home</Link> |
-        <Link to="/about">About</Link> | 
-        <Link to="/Counter">Counter</Link> | 
-        <Link to="/Input">Input</Link> | 
-        <Link to="/Input2">Input2</Link> |
-
-        
-        <Link to="/List">List</Link>
-      </nav>
-      <Routes>
-        <Route path='/' element={<Home />}/>
-        <Route path='/about' element={<About />}/>
-        <Route path='/Counter' element={<Counter />}/>
-        <Route path='/Input' element={<Input />}/>
-        <Route path='/Input2' element={<Input2 />}/>
-        <Route path='/List' element={<List />}/>
-      </Routes> */
-
   );
 }
 

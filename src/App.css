@@ -1,0 +1,30 @@
+.App-header{
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(81, 76, 87);
+    color: white;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px+2vmin);
+}
+.input-title{
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(81, 76, 87);
+    color: white;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(100vh - 200px);
+    padding: 20px;
+}
+.list-body{
+    padding: 20px;
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(81, 76, 87);
+    align-items: center;
+    min-height: calc(100vh - 200px);
+}
