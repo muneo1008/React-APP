@@ -70,9 +70,9 @@ function App() {
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>#</th>
-              <th>First Name</th>
-              <th>Username</th>
+              <th>Done</th>
+              <th>Todo</th>
+              <th>Option</th>
             </tr>
           </thead>
           <tbody>
