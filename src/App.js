@@ -9,7 +9,7 @@ function App() {
   const [todoList, setTodoList] = useState([
     { no: 1, title: '공부하기', done: false },
     { no: 2, title: '밥먹기', done: false },
-    { no: 3, title: '크로스핏가기', done: true },
+    { no: 3, title: '수업가기', done: true },
     { no: 4, title: '꿀잠자기', done: false }]
   );
   const [noCnt, setNoCnt] = useState(5);
@@ -32,7 +32,6 @@ function App() {
       }
     });
     setOutputTitle("");
-    console.log(newEditList);
     setTodoList(newEditList);
   }
   const onDelete = ({ no, title, done }) => {
